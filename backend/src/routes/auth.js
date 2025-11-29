@@ -38,6 +38,7 @@ router.post('/login', async (req, res) => {
       expiresIn: '8h',
     });
 
+    console.log('Login successful, setting cookie with sameSite: none, secure: true, origin:', req.headers.origin);
     res
       .cookie('token', token, {
         httpOnly: true,
