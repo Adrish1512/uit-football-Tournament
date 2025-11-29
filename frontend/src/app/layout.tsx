@@ -4,9 +4,9 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { NavBar } from "@/components/NavBar";
 
 export const metadata: Metadata = {
-  title: "UIT BU Inter-Department Football",
+  title: "UIT Inter-Department Football",
   description:
-    "UIT Burdwan University inter-department football tournament portal",
+    "UIT inter-department football tournament portal",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
             <header className="app-header">
               <div className="brand">
                 <span className="brand-title">
-                  UIT Burdwan University Football Tournament
+                  UIT Football Tournament
                 </span>
                 <span className="brand-subtitle">
                   Inter-Department Championship
