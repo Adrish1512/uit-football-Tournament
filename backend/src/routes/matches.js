@@ -222,7 +222,7 @@ router.post('/:id/score', auth, async (req, res) => {
 
     const match = await Match.findByIdAndUpdate(req.params.id, update, {
       new: true,
-    }).populate('teamA teamB goals.player goals.team');
+    }).populate('teamA teamB goals.player goals.team teamALineup.goalkeeper teamALineup.players teamBLineup.goalkeeper teamBLineup.players substitutions.team substitutions.playerOut substitutions.playerIn');
 
     if (!match) return res.status(404).json({ message: 'Match not found' });
 

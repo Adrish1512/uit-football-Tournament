@@ -47,6 +47,12 @@ type Match = {
     goalkeeper?: string | Player;
     players?: (string | Player)[];
   };
+  substitutions?: Array<{
+    team: string | Team;
+    playerOut: string | Player;
+    playerIn: string | Player;
+    minute: number;
+  }>;
   isPublished: boolean;
 };
 
@@ -237,7 +243,15 @@ export default function AdminDashboardPage() {
         newPlayers.push(substituteForm.playerIn);
       }
 
-      // Update the match with new lineup
+      // Calculate current minute for substitution
+      const matchStart = new Date(editingMatch.date);
+      const now = new Date();
+      const substitutionMinute = Math.floor((now.getTime() - matchStart.getTime()) / (1000 * 60));
+
+      // Get current substitutions
+      const currentSubstitutions = editingMatch.substitutions || [];
+
+      // Update the match with new lineup and add substitution record
       await apiFetch(`/matches/${editingMatch._id}`, {
         method: "PUT",
         body: JSON.stringify({
@@ -245,6 +259,15 @@ export default function AdminDashboardPage() {
             goalkeeper: newGoalkeeper,
             players: newPlayers,
           },
+          substitutions: [
+            ...currentSubstitutions,
+            {
+              team: substituteForm.team,
+              playerOut: substituteForm.playerOut,
+              playerIn: substituteForm.playerIn,
+              minute: Math.max(0, Math.min(90, substitutionMinute)),
+            },
+          ],
         }),
       });
 
