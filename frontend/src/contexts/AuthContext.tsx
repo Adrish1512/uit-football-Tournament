@@ -21,8 +21,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   async function checkAuth() {
     try {
-      // Try to access an admin-only endpoint to check if authenticated
-
       const apiBase =
         process.env.NEXT_PUBLIC_API_BASE ||
         (typeof window !== "undefined" &&
@@ -38,7 +36,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsAuthenticated(false);
       }
     } catch {
-      
       setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
@@ -50,9 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
-    // Add a small delay to allow the browser to process the Set-Cookie header
     await new Promise((resolve) => setTimeout(resolve, 100));
-    // Verify the token was actually set by checking auth
     await checkAuth();
     router.push("/admin");
   }
@@ -61,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await apiFetch("/auth/logout", { method: "POST" });
     } catch {
-      // Ignore errors
+      // ignore
     }
     setIsAuthenticated(false);
     router.push("/");
