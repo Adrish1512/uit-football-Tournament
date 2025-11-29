@@ -62,12 +62,13 @@ export default async function FixturesPage() {
                     {m.teamA.department} · {m.teamB.department}
                   </td>
                   <td className="muted">
-                    {new Date(m.date).toLocaleString(undefined, {
-                      day: "2-digit",
-                      month: "short",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                  {new Date(m.date).toLocaleString("en-IN", {
+                    timeZone: "Asia/Kolkata",
+                    day: "2-digit",
+                    month: "short",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                   </td>
                   <td className="muted">{m.venue}</td>
                   <td>
