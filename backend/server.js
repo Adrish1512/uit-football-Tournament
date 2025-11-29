@@ -21,10 +21,17 @@ const User = require("./src/models/User");
 const app = express();
 const server = http.createServer(app);
 
+// ALLOWED ORIGINS FOR CORS & SOCKET.IO
+const allowedOrigins = [
+  process.env.CLIENT_ORIGIN,
+  "http://localhost:3000",
+  "https://uit-football-tournament.vercel.app",
+].filter(Boolean);
+
 // SOCKET.IO
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_ORIGIN || "*",
+    origin: allowedOrigins,
     credentials: true,
   },
 });
@@ -40,7 +47,7 @@ io.on("connection", (socket) => {
 // MIDDLEWARE
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN || "*",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
